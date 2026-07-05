@@ -1,0 +1,15 @@
+Right-to-Left Transaction Parsing
+
+Each transaction row must be parsed from right to left, not from left to right.
+
+Parsing order:
+
+Read the amount field at the extreme right.
+Remove the amount token from the transaction.
+Extract the CONTO block by scanning right-to-left, collecting the account description words and the numeric account identifiers immediately preceding them.
+Everything remaining before the CONTO block becomes DESCRIZIONE.
+Extract N.Prot. (numeric). If missing, carry forward the previous non-empty value.
+Extract N.RIF. (a single alphabetic character only, e.g., A, B, C). If missing, leave blank.
+Extract DATA (dd/mm/yyyy). If missing, leave blank.
+
+This right-to-left parsing order is a core requirement because the account (CONTO) and amount fields are consistently positioned at the end of each transaction, making them more reliable anchors than parsing from the left.
